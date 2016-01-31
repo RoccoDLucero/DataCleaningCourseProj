@@ -11,7 +11,7 @@
 ################################################################################
 ################################################################################
 library(plyr)
-#WDPath = ".../UCI HAR Dataset" #Set the path to the UCI dataset on your system
+WDPath = "H:/Dropbox/MOOCS/Coursera_Data_Science/GettingAndCleaningData/UCI HAR Dataset"
 setwd(WDPath)
 #Preparee labeled lists as containers for the datasets
 DataSets = list(NULL,NULL)
@@ -23,7 +23,8 @@ names(subjects) = c("train", "test")
 #create selectors for interesting subsets.
 #These objects contain the variable names
 features <- read.table("./features.txt", quote="\"", comment.char="")
-meanStdFeatureElems = (grep("[mM][eE][aA][nN]|[sS][tT][dD]",features[,2]))
+features = gsub(pattern = '\\(\\)',replacement = "",x = features[,2])
+meanStdFeatureElems = (grep("[mM][eE][aA][nN]|[sS][tT][dD]",features))
 
 activityLabels <- read.table("./activity_labels.txt", quote="\"",
                              comment.char="",stringsAsFactors = F)
@@ -35,7 +36,7 @@ DataSets$train <- read.table( "./train/X_train.txt", quote="\"", comment.char=""
 subjects$train <- read.table("./train/subject_train.txt", quote="\"", comment.char="")
 
 DataSets$train$subject.ID = factor(subjects$train[,])
-colnames(DataSets$train) = c(as.character(features[,2]),"Subject.ID")
+colnames(DataSets$train) = c(as.character(features),"Subject.ID")
 
 #Import activityIds, convert Ids to descriptive label for each observation.
 activitySet <- read.table("./train/y_train.txt", quote="\"", comment.char="")
@@ -58,7 +59,7 @@ DataSets$test <- read.table( "./test/X_test.txt", quote="\"", comment.char="")
 subjects$test <- read.table("./test/subject_test.txt", quote="\"", comment.char="")
 
 DataSets$test$subject.ID = factor(subjects$test[,])
-colnames(DataSets$test) = c(as.character(features[,2]),"Subject.ID")
+colnames(DataSets$test) = c(as.character(features),"Subject.ID")
 
 #Import activityIds, convert Ids to descriptive label for each observation.
 activitySet <- read.table("./test/y_test.txt", quote="\"", comment.char="")
@@ -80,3 +81,4 @@ selectedFeatures = c("Subject.ID","Activity.ID",
 combinedSets = rbind.data.frame(DataSets$train[,selectedFeatures],
                                 DataSets$test[,selectedFeatures])
 write.table(x = combinedSets,file = "./AllSubj_Avgs.txt",row.names = F,col.names = T)
+
