@@ -19,7 +19,7 @@ subjects = list(NULL,NULL)
 names(DataSets) = c("train", "test")
 names(subjects) = c("train", "test")
 
-#Import information relevant to all data sets and
+#Import information relevant to all data sets and a
 #create selectors for interesting subsets.
 #These objects contain the variable names
 features <- read.table("./features.txt", quote="\"", comment.char="")
@@ -36,18 +36,18 @@ DataSets$train <- read.table( "./train/X_train.txt", quote="\"", comment.char=""
 subjects$train <- read.table("./train/subject_train.txt", quote="\"", comment.char="")
 
 DataSets$train$subject.ID = factor(subjects$train[,])
-colnames(DataSets$train) = c(as.character(features),"Subject.ID")
+colnames(DataSets$train) = c(as.character(features),"subject.ID")
 
 #Import activityIds, convert Ids to descriptive label for each observation.
 activitySet <- read.table("./train/y_train.txt", quote="\"", comment.char="")
 activitySet = as.numeric(activitySet[,1])
 activitySet = as.data.frame(mapvalues(activitySet, from = activityLabels$V1,
                                   to = activityLabels$V2))
-colnames(activitySet) = "Activity.ID"
-DataSets$train$Activity.ID = factor(activitySet[,])
+colnames(activitySet) = "activity.ID"
+DataSets$train$activity.ID = factor(activitySet[,])
 
 #Add Identifier for source of the data
-DataSets$train$FromSet = factor(rep(x = "Training",nrow(DataSets$train)))
+DataSets$train$fromSet = factor(rep(x = "Training",nrow(DataSets$train)))
 
 ################################################################################
 ## REPEAT THE ABOVE FOR THE TEST DATA SET
@@ -59,24 +59,24 @@ DataSets$test <- read.table( "./test/X_test.txt", quote="\"", comment.char="")
 subjects$test <- read.table("./test/subject_test.txt", quote="\"", comment.char="")
 
 DataSets$test$subject.ID = factor(subjects$test[,])
-colnames(DataSets$test) = c(as.character(features),"Subject.ID")
+colnames(DataSets$test) = c(as.character(features),"subject.ID")
 
 #Import activityIds, convert Ids to descriptive label for each observation.
 activitySet <- read.table("./test/y_test.txt", quote="\"", comment.char="")
 activitySet = as.numeric(activitySet[,1])
 activitySet = as.data.frame(mapvalues(activitySet, from = activityLabels$V1,
                                       to = activityLabels$V2))
-colnames(activitySet) = "Activity.ID"
-DataSets$test$Activity.ID = factor(activitySet[,])
+colnames(activitySet) = "activity.ID"
+DataSets$test$activity.ID = factor(activitySet[,])
 
 #Add Identifier for source of the data
-DataSets$test$FromSet = factor(rep(x = "Test",nrow(DataSets$test)))
+DataSets$test$fromSet = factor(rep(x = "Test",nrow(DataSets$test)))
 
 
 ##NOW MERGE THE DATA SETS AND SELECT THE SUBSET OF VARIABLES
 ##CONTAINING JUST MEANS AND STANDARD DEVIATIONS
-selectedFeatures = c("Subject.ID","Activity.ID",
-                     colnames(DataSets$test)[meanStdFeatureElems],"FromSet")
+selectedFeatures = c("subject.ID","activity.ID",
+                     colnames(DataSets$test)[meanStdFeatureElems],"fromSet")
 
 combinedSets = rbind.data.frame(DataSets$train[,selectedFeatures],
                                 DataSets$test[,selectedFeatures])
