@@ -1,6 +1,8 @@
 # DataCleaningCourseProj
-This repo contains the script UCI_Tidy.R script which tidys up the UCI human activity data set, to a reduced data set AllSubj_Avgs.txt which includes all 30 subjects of the study with mean and standard deviation values for each measurement at every sampled timepoint.
-As of 1.31.2015 the origianl data is hosted at: http://archive.ics.uci.edu/ml/machine-learning-databases/00240/
+This repo contains the script UCI_Tidy.R script which tidys up the UCI human activity data set, to a reduced data set AllSubj_Avgs.txt
+
+AllSubj_Avgs.txt includes all 30 subjects of the UCI HAR study providing mean and standard deviation values for each measurement at every sampled timepoint.
+As of 1.31.2015 the original UCI HAR data is hosted at: http://archive.ics.uci.edu/ml/machine-learning-databases/00240/
 
 CodeBook.MD describes the variables present in AllSubj_Avgs.txt 
 
